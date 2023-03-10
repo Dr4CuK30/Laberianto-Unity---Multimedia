@@ -4,42 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float velocidad = 1;
-    new Rigidbody rigidbody;
-    Vector3 initialPosition;
-    int monedas = 0;
-
+    Rigidbody rb;
+    public int vidas = 3;
+    public Vector3 initialPosition;
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         initialPosition = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        float vertical = Input.GetAxis("Vertical");
-        float horizontal = Input.GetAxis("Horizontal");
-
-        rigidbody.AddForce(new Vector3(horizontal, 0, vertical) * velocidad);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("goal"))
+        if (transform.position.y < -20)
         {
-            Debug.Log("Ganaste!!");
-        }
-        else if (other.CompareTag("coin"))
-        {
-            other.gameObject.SetActive(false);
-            monedas++;
-        }
-        else if (other.CompareTag("enemy"))
-        {
-            rigidbody.MovePosition(initialPosition);
-            rigidbody.velocity = Vector3.zero;
+            vidas--;
+            print(vidas);
+            rb.angularVelocity = Vector3.zero;
+            rb.MovePosition(initialPosition);
         }
     }
 }
