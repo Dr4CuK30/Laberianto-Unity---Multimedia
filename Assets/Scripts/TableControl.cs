@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TableControl : MonoBehaviour
 {
-    public GameObject table;
+    static public Boolean blockMovement = false;
     
     // Start is called before the first frame update
     void Start()
@@ -16,7 +16,7 @@ public class TableControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.anyKey && !blockMovement)
         {
             if (Input.GetKey(KeyCode.A) & transform.rotation.z < 0.2)
             {
@@ -26,7 +26,7 @@ public class TableControl : MonoBehaviour
             {
                 transform.Rotate(new Vector3(0, 0, -30f) * Time.deltaTime * 1.5f);
             }
-            else if (Input.GetKey(KeyCode.S) & transform.rotation.x > -0.2 )
+            if (Input.GetKey(KeyCode.S) & transform.rotation.x > -0.2 )
             {
                 transform.Rotate(new Vector3(-30f, 0, 0) * Time.deltaTime * 1.5f);
             }
